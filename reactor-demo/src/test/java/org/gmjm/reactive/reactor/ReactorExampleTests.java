@@ -52,11 +52,11 @@ public class ReactorExampleTests {
     }
 
     @Test
-    public void reduceWithFlatMap() {
+    public void flatMapReverseWithReduce() {
         Flux
             .just("hello world!")
             .flatMap(str -> Flux.fromArray(str.split("")))
-            .reduce("", (val, acc) -> acc.concat(val))
+            .reduce("", (acc, val) -> val.concat(acc))
             .subscribe(log::info);
     }
 
@@ -74,7 +74,7 @@ public class ReactorExampleTests {
     }
 
     @Test
-    public void singleFlux_Multiple() {
+    public void singleFluxData_MultipleSubscribers() {
         Flux<String> data = Flux
             .just("Java", "C#");
 
