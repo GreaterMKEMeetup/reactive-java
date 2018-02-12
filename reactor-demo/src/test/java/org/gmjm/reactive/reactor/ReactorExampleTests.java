@@ -90,6 +90,9 @@ public class ReactorExampleTests {
         nonJavaFilter.subscribe(log::info);
     }
 
+    /***
+     * Purposely blocking these flux for demonstration purposes alone.
+     */
     @Test
     public void circuitBreakerFallback() {
         CatRepository successfulCatRepository = new SuccessfulCatRepository();
