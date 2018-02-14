@@ -17,6 +17,7 @@
 
     <modules>
         <module>reactor-demo</module>
+        <module>common-database</module>
     </modules>
 
     <properties>
