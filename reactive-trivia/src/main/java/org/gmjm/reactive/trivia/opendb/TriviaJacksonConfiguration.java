@@ -10,16 +10,16 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Set;
 
 @Configuration
-public class TriviaJacksonConfiguration {
+class TriviaJacksonConfiguration {
 
     @Bean
-    public Module triviaModule() {
+    Module triviaModule() {
         return new TriviaModule();
     }
 
     static class TriviaModule extends SimpleModule {
 
-        public TriviaModule() {
+        TriviaModule() {
             setMixInAnnotation(TriviaQuestion.class, TriviaQuestionMixin.class);
             setMixInAnnotation(TriviaQuestionsResponse.class, TriviaQuestionsResponseMixin.class);
         }
