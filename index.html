@@ -90,7 +90,7 @@ userService.getFavorites(userId, new Callback&lt;List&lt;String&gt;&gt;() {
 			</section>
 			<section>
 				<h2>Callbacks...not so bad!</h2>
-				<h5></h5>
+				<h5>Reactor</h5>
 				<pre><code class="java" data-trim>
 userService.getFavorites(userId) 
   .flatMap(favoriteService::getDetails) 
@@ -105,6 +105,54 @@ userService.getFavorites(userId)
 						<a href="http://projectreactor.io/docs/core/release/reference/#_asynchronicity_to_the_rescue">Reactor Documentation</a>
 					</small>
 				</p>
+			</section>
+			<section>
+				<h2>Can I use reactive?</h2>
+				<ul>
+					<li class="fragment">Not using JDBC(*)
+						<ul>
+							<li class="fragment">MongoDB</li>
+							<li class="fragment">Redis</li>
+							<li class="fragment">* Some non-blocking JDBC drivers</li>
+						</ul>
+					</li>
+					<li class="fragment">Web API based</li>
+					<li class="fragment">Microservice without backing storage</li>
+				</ul>
+			</section>
+			<section>
+				<h2>How do I get started?</h2>
+				<h4>RxJava</h4>
+				<ul>
+					<li class="fragment">Mature</li>
+					<li class="fragment">Community Support</li>
+					<li class="fragment">Angular devs will feel at home</li>
+					<li class="fragment">
+						<a href="https://github.com/ReactiveX/RxJava">RxJava GitHub</a>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>How do I get started?</h2>
+				<h4>Reactor</h4>
+				<ul>
+					<li class="fragment">Plays nice with Spring</li>
+					<li class="fragment">Clean API for reactive web</li>
+					<li class="fragment">
+						<a href="http://projectreactor.io/">Reactor</a>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Demo</h2>
+				<ul>
+					<li>
+						<a href="https://greatermkemeetup.github.io/reactive-java/">Slides</a>
+					</li>
+					<li>
+						<a href="https://github.com/GreaterMKEMeetup/reactive-java/">Code</a>
+					</li>
+				</ul>
 			</section>
 		</div>
 	</div>
