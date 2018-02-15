@@ -42,10 +42,10 @@
 				</ul>
 			</section>
 			<section>
-				<h2>Async Programming Model - Reasons Why</h2>
+				<h2>Async - Reasons Why</h2>
 				<p>
 					<small>Promises?
-						<strong>GROSS</strong>
+						<strong>GROSS</strong> Get your JS out of here.
 					</small>
 				</p>
 				<ul>
@@ -53,6 +53,58 @@
 					<li class="fragment">Predictable Scaling</li>
 					<li class="fragment">Better Utilization of Resources</li>
 				</ul>
+			</section>
+			<section>
+				<h2>Non-Blocking</h2>
+				<p>
+					<small>The biggest hurdle</small>
+				</p>
+				<ul>
+					<li class="fragment">Thread.sleep(..) - bad</li>
+					<li class="fragment">No JDBC</li>
+					<li class="fragment">Everything is a callback (!!!)</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Callbacks, seriously?</h2>
+				<h5>Good ole callback hell</h5>
+				<pre><code class="java" data-trim>
+userService.getFavorites(userId, new Callback&lt;List&lt;String&gt;&gt;() { 
+  public void onSuccess(List&lt;String&gt; list) { 
+    if (list.isEmpty()) { 
+      suggestionService.getSuggestions(new Callback&lt;List&lt;Favorite&gt;&gt;() {
+        public void onSuccess(List&lt;Favorite&gt; list) { 
+          UiUtils.submitOnUiThread(() -&gt; { 
+            list.stream()
+              .limit(5)
+              .forEach(uiList::show); 
+          });
+        } // ... You get the point.
+						</code>
+					</pre>
+				<p>
+					<small>Source:
+						<a href="http://projectreactor.io/docs/core/release/reference/#_asynchronicity_to_the_rescue">Reactor Documentation</a>
+					</small>
+				</p>
+			</section>
+			<section>
+				<h2>Callbacks, ahhhhh</h2>
+				<h5></h5>
+				<pre><code class="java" data-trim>
+userService.getFavorites(userId) 
+  .flatMap(favoriteService::getDetails) 
+  .switchIfEmpty(suggestionService.getSuggestions()) 
+  .take(5) 
+  .publishOn(UiUtils.uiThreadScheduler())
+  .subscribe(uiList::show, UiUtils::errorPopup);
+						</code>
+					</pre>
+				<p>
+					<small>Source:
+						<a href="http://projectreactor.io/docs/core/release/reference/#_asynchronicity_to_the_rescue">Reactor Documentation</a>
+					</small>
+				</p>
 			</section>
 		</div>
 	</div>
