@@ -15,7 +15,7 @@ public class TriviaQuestion {
     private final String question;
     private final String type;
 
-    public Map<String, String> toSlackMessage(TriviaQuestion triviaQuestion) {
+    public Map<String, String> toSlackMessage() {
         //:TODO
         return null;
     }

@@ -45,6 +45,7 @@ public class JsonSlackTests {
             "\"event_id\":\"Ev08MFMKH6\"," +
             "\"event_time\": 1234567890" +
         "}";
+
     private static EventPayload defaultEventPayload = new EventPayload(EventType.message, new HashMap<String, String>() {{
         put("channel", "D024BE91L");
         put("user", "U2147483697");
@@ -53,8 +54,8 @@ public class JsonSlackTests {
     }});
 
     public static SlackEvent slackEventExpected = new SlackEvent("XXYYZZ", "TXXXXXXXX", "AXXXXXXXXX",
-        defaultEventPayload, "event_callback", new HashSet<String>(Arrays.asList("UXXXXXXX1", "UXXXXXXX2")),
-        "Ev08MFMKH6", 1234567890L);
+        defaultEventPayload, "event_callback", new HashSet<>(Arrays.asList("UXXXXXXX1", "UXXXXXXX2")),
+    "Ev08MFMKH6", 1234567890L);
 
     @Test
     public void deserializeEventPayload() throws Exception {
