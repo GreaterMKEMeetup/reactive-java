@@ -25,12 +25,36 @@ public class JsonSlackTests {
     @Autowired
     private JacksonTester<EventPayload> eventPayloadJson;
 
-    private EventPayload defaultEventPayload = new EventPayload(EventType.message, new HashMap<String, String>() {{
+    public static final String VALID_SLACK_MESSAGE_JSON =
+        "{" +
+            "\"token\":\"XXYYZZ\"," +
+            "\"team_id\":\"TXXXXXXXX\"," +
+            "\"api_app_id\":\"AXXXXXXXXX\"," +
+            "\"event\": {" +
+                "\"type\":\"message\"," +
+                "\"channel\":\"D024BE91L\"," +
+                "\"user\":\"U2147483697\"," +
+                "\"text\":\"!trivia Hello world\"," +
+                "\"ts\":\"1355517523.000005\"" +
+            "}," +
+            "\"type\":\"event_callback\"," +
+            "\"authed_users\": [" +
+                "\"UXXXXXXX1\"," +
+                "\"UXXXXXXX2\"" +
+            "]," +
+            "\"event_id\":\"Ev08MFMKH6\"," +
+            "\"event_time\": 1234567890" +
+        "}";
+    private static EventPayload defaultEventPayload = new EventPayload(EventType.message, new HashMap<String, String>() {{
         put("channel", "D024BE91L");
         put("user", "U2147483697");
         put("text", "Hello world");
         put("ts", "1355517523.000005");
     }});
+
+    public static SlackEvent slackEventExpected = new SlackEvent("XXYYZZ", "TXXXXXXXX", "AXXXXXXXXX",
+        defaultEventPayload, "event_callback", new HashSet<String>(Arrays.asList("UXXXXXXX1", "UXXXXXXX2")),
+        "Ev08MFMKH6", 1234567890L);
 
     @Test
     public void deserializeEventPayload() throws Exception {
@@ -48,32 +72,7 @@ public class JsonSlackTests {
 
     @Test
     public void deserializeSlackEvent() throws Exception {
-        String content =
-            "{" +
-                "\"token\":\"XXYYZZ\"," +
-                "\"team_id\":\"TXXXXXXXX\"," +
-                "\"api_app_id\":\"AXXXXXXXXX\"," +
-                "\"event\": {" +
-                    "\"type\":\"message\"," +
-                    "\"channel\":\"D024BE91L\"," +
-                    "\"user\":\"U2147483697\"," +
-                    "\"text\":\"Hello world\"," +
-                    "\"ts\":\"1355517523.000005\"" +
-                "}," +
-                "\"type\":\"event_callback\"," +
-                "\"authed_users\": [" +
-                    "\"UXXXXXXX1\"," +
-                    "\"UXXXXXXX2\"" +
-                "]," +
-                "\"event_id\":\"Ev08MFMKH6\"," +
-                "\"event_time\": 1234567890" +
-            "}";
-
-        SlackEvent expected = new SlackEvent("XXYYZZ", "TXXXXXXXX", "AXXXXXXXXX",
-            defaultEventPayload, "event_callback", new HashSet<String>(Arrays.asList("UXXXXXXX1", "UXXXXXXX2")),
-            "Ev08MFMKH6", 1234567890L);
-
-        assertThat(this.slackEventJson.parse(content)).isEqualToIgnoringGivenFields(expected, "eventPayload");
+        assertThat(slackEventJson.parse(VALID_SLACK_MESSAGE_JSON)).isEqualToIgnoringGivenFields(slackEventExpected, "eventPayload");
     }
 
 }

@@ -16,4 +16,24 @@ public class SlackEvent {
     private final String eventId;
     private final Long eventTime;
 
+    public ChatMessage toChatMessage() {
+        String user = eventPayload.getFields().get("user");
+        String text = eventPayload.getFields().get("text");
+
+        return new ChatMessage(user, text, eventTime);
+    }
+
+    public boolean isTriviaMessage() {
+        String text = eventPayload.getFields().get("text");
+        return text.startsWith("!trivia");
+    }
+
+    @Value
+    public static class ChatMessage {
+
+        private final String user;
+        private final String text;
+        private final Long eventTime;
+
+    }
 }

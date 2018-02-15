@@ -2,10 +2,11 @@ package org.gmjm.reactive.trivia.opendb;
 
 import lombok.Value;
 
+import java.util.Map;
 import java.util.Set;
 
 @Value
-class TriviaQuestion {
+public class TriviaQuestion {
 
     private final String category;
     private final String correctAnswer;
@@ -13,5 +14,10 @@ class TriviaQuestion {
     private final Set<String> incorrectAnswers;
     private final String question;
     private final String type;
+
+    public Map<String, String> toSlackMessage(TriviaQuestion triviaQuestion) {
+        //:TODO
+        return null;
+    }
 
 }

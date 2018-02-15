@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Set;
 
 @Configuration
-class TriviaJacksonConfiguration {
+public class TriviaJacksonConfiguration {
 
     @Bean
-    Module triviaModule() {
+    public Module triviaModule() {
         return new TriviaModule();
     }
 

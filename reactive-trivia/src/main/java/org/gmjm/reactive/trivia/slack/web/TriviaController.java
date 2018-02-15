@@ -1,22 +1,27 @@
 package org.gmjm.reactive.trivia.slack.web;
 
+import lombok.extern.apachecommons.CommonsLog;
 import org.gmjm.reactive.trivia.slack.SlackEvent;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@CommonsLog
 @RestController
-@RequestMapping("/trivia")
+@RequestMapping("/")
 public class TriviaController {
 
-    @PostMapping
-    public Mono<ServerResponse> handleSlackMessage(@RequestBody ServerRequest request) {
-        Mono<SlackEvent> slackEvent = request.bodyToMono(SlackEvent.class);
-        return null;
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<Void> handleSlackMessage(@RequestBody Mono<SlackEvent> slackEvent) {
+        return slackEvent
+            .filter(e -> e.getEventPayload().getEventType() != null)
+            .filter(SlackEvent::isTriviaMessage)
+            .map(SlackEvent::toChatMessage)
+            .doOnNext(log::info)
+            .then();
     }
 
 }

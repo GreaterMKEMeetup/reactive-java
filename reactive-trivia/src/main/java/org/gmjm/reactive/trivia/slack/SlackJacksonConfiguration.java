@@ -4,16 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Set;
 
 @Configuration
-class SlackJacksonConfiguration {
+public class SlackJacksonConfiguration {
 
     @Bean
-    Module slackModule() {
+    public Module slackModule() {
         return new SlackModule();
     }
 
@@ -31,9 +32,6 @@ class SlackJacksonConfiguration {
                             @JsonProperty("api_app_id") String appId, @JsonProperty("event") EventPayload eventPayload,
                             @JsonProperty("type") String type, @JsonProperty("authed_users") Set<String> authedUsers,
                             @JsonProperty("event_id") String eventId, @JsonProperty("event_time") Long eventTime) {}
-
-
-
         }
 
         static abstract class EventPayloadMixin {
